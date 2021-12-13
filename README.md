@@ -12,4 +12,4 @@
 
 Ensure you grant IAM policy to enable backend deploy tfstate file. <br>See [s3 Backend config](https://www.terraform.io/docs/language/settings/backends/s3.html)
 
-<i>still resolving issues with getting an output of s3 object url</i>
+<i><b>Note:</b> still resolving issues with getting an output of s3 object url</i>
