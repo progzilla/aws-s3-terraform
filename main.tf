@@ -42,3 +42,7 @@ resource "aws_s3_bucket_object" "object" {
     acl = "public-read"
     # etag = filemd5("../../../Music/${each.value}")
 }
+
+output "arn" {
+  # get object arn url 
+}
