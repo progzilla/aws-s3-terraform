@@ -5,6 +5,7 @@ terraform {
       version = "3.69.0"
     }
   }
+  # configure remote storage for state file
   backend "s3" {
     bucket = "terrabucks"
     region = "eu-west-1"
@@ -14,6 +15,7 @@ terraform {
   }
 }
 
+# cnfigure provider defaults
 provider "aws" {
   # Configuration options
     region = "${var.aws_region}"
@@ -22,6 +24,7 @@ provider "aws" {
     secret_key = var.AWS_SECRET_KEY_ID
 }
 
+# create the s3 bucket
 resource "aws_s3_bucket" "bucket" {
   bucket = "ghm-music-upload"
   acl = "private"
@@ -34,16 +37,19 @@ resource "aws_s3_bucket" "bucket" {
   }
 }
 
+# create and upload object to bucket 
 resource "aws_s3_bucket_object" "object" {
     bucket = aws_s3_bucket.bucket.id
-    key = "Blessing.mp3"
-    source = "../../../Music/Blessings.mp3"
-    # for_each = fileset("../../../Music/", "*")
+    key = "FillUs.mp3"
+    source = "../../../Music/FillUs.mp3"
     acl = "public-read"
+    # sample for multiple uploads
+    # for_each = fileset("../../../Music/", "*")
     # etag = filemd5("../../../Music/${each.value}")
 }
 
-output "arn" {
-  # get object arn url 
-  value = aws_s3_bucket_object.object.id
+# outputs resulting arn url of the object (not wrking yet)
+output "s3_bucket_arn" {
+  description = "The ARN of the bucket. Will be of format arn:aws:s3:::bucketname."
+  value       = aws_s3_bucket_object.object.id
 }
